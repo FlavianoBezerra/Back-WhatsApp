@@ -10,8 +10,9 @@ const io = socketIo(server);
 //emit -> enviar
 
 const port = process.env.PORT || 4000;
-server.listen(port, () => console.log(`server is running on ${port}`));
 
 io.on('connection', (socket) => {
-    console.log(socket.id);
+    console.log(`O usuário ${socket.id} conectou-se.`);
 });
+
+server.listen(port, () => console.log(`server is running on ${port}`));
