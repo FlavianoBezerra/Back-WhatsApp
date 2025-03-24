@@ -5,14 +5,23 @@ const socketIo = require('socket.io');
 const app = express();
 const server = http.createServer(app);
 const io = socketIo(server);
-
 //on -> receptor
 //emit -> enviar
+const users = [];
 
 const port = process.env.PORT || 4000;
 
 io.on('connection', (socket) => {
-    console.log(`O usuário ${socket.id} conectou-se.`);
+    socket.on("disconnect", (socket) => {
+
+    })
+
+    socket.on("join", (name) => {
+        const user = { id: socket.id, name };
+        users.push(user);
+        io.emit("message", {name: null, message: `${name} entrou no chat`});
+        io.emit("users", users);
+    });
 });
 
 server.listen(port, () => console.log(`server is running on ${port}`));
