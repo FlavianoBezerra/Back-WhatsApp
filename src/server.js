@@ -11,8 +11,8 @@ const users = [];
 
 const port = process.env.PORT || 4000;
 
-io.on('connection', (socket) => {
-    socket.on("disconnect", (socket) => {
+io.on("connection", (socket) => {
+    socket.on("disconnect", () => {
 
     })
 
@@ -21,6 +21,10 @@ io.on('connection', (socket) => {
         users.push(user);
         io.emit("message", {name: null, message: `${name} entrou no chat`});
         io.emit("users", users);
+    });
+
+    socket.on("message", (message) => {
+        io.emit("message", message);
     });
 });
 
